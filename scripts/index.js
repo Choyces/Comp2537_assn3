@@ -3,7 +3,20 @@ let pairsLeft = 0;
 let powerUsed = false;
 let clicks = 0;
 let isProcessing = false;
-const diffButton = document.querySelectorAll('.difficulty');
+let gameTimer = 0;
+let timerInterval = null;
+let darkMode = false;
+
+function toggleTheme() {
+  darkMode = !darkMode;
+  document.body.classList.toggle("dark-mode", darkMode);
+
+  const toggleBtn = document.getElementById("themeToggle");
+  toggleBtn.textContent = darkMode ? "Light Mode" : "Dark Mode";
+  toggleBtn.classList.toggle("btn-outline-dark", !darkMode);
+  toggleBtn.classList.toggle("btn-outline-light", darkMode);
+}
+
 
 
 function updateStats() {
@@ -20,6 +33,9 @@ function resetGame() {
   secondCard = undefined;
   isProcessing = false;
   powerUsed = false;
+  clearInterval(timerInterval);
+  gameTimer = 0;
+  document.getElementById("stat-timer").textContent = "0s";
   document.getElementById("powerUpButton").classList.add("d-none");
 
       document.querySelectorAll('.difficulty').forEach(function(el) {
@@ -165,6 +181,7 @@ function setup() {
         if (matches === pairsLeft) {
           setTimeout(() => alert("You win!"), 500);
           setTimeout(() => {resetGame();}, 2000);
+          clearInterval(timerInterval);
         }
 
         resetCards();
@@ -204,7 +221,30 @@ function start() {
     return;
   }
   displayPokemon();
+  startTimer();
 }
+
+function startTimer() {
+  clearInterval(timerInterval);
+  gameTimer = 100;
+
+  document.getElementById("stat-timer").textContent = `${gameTimer}s`;
+
+  timerInterval = setInterval(() => {
+    gameTimer--;
+    const minutes = Math.floor(gameTimer / 60);
+    const seconds = gameTimer % 60;
+    document.getElementById("stat-timer").textContent =
+      minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+
+    if (gameTimer <= 0) {
+      clearInterval(timerInterval);
+      alert("You lose!");
+      resetGame();
+    }
+  }, 1000);
+}
+
 
 function resetCards() {
   firstCard = undefined;

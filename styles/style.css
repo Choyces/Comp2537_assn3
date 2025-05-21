@@ -52,3 +52,27 @@ img {
 .front_face {
   transform: rotateY(180deg);
 }
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+.dark-mode .btn {
+  border-color: #ccc;
+}
+
+.dark-mode .btn-outline-dark {
+  color: #fff;
+  border-color: #fff;
+}
+
+.dark-mode .btn-outline-dark:hover {
+  background-color: #fff;
+  color: #000;
+}

@@ -12,6 +12,7 @@
 <body class="container text-center">
 
   <h1 class="mt-4">Pokémon Match Game</h1>
+<button id="themeToggle" onclick="toggleTheme()" class="btn btn-outline-dark m-1">Dark Mode</button>
 
   <div class="mt-3">
     <button type="button" id="easy" onclick="setDifficulty('easy')" class="btn btn-success m-1 difficulty">Easy</button>
@@ -27,6 +28,7 @@
   </div>
 
   <div class="mt-3">
+    <p><strong>Time:</strong> <span id="stat-timer">0s</span></p>
     <button id="powerUpButton" type="button" onclick="powerUp()" class="btn btn-info m-1">Power-Up</button>
     <button id="resetButton" onclick="resetGame()" class="btn btn-secondary d-none">Reset Game</button>
   </div>
