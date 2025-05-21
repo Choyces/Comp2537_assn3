@@ -14,10 +14,10 @@
   <h1 class="mt-4">Pokémon Match Game</h1>
 
   <div class="mt-3">
-    <button type="button" id="easy" onclick="setDifficulty('easy')" class="btn btn-success m-1">Easy</button>
-    <button type="button" id="medium" onclick="setDifficulty('medium')" class="btn btn-warning m-1">Medium</button>
-    <button type="button" id="hard" onclick="setDifficulty('hard')" class="btn btn-danger m-1">Hard</button>
-    <button type="button" onclick="start()" class="btn btn-primary m-1">Start</button>
+    <button type="button" id="easy" onclick="setDifficulty('easy')" class="btn btn-success m-1 difficulty">Easy</button>
+    <button type="button" id="medium" onclick="setDifficulty('medium')" class="btn btn-warning m-1 difficulty">Medium</button>
+    <button type="button" id="hard" onclick="setDifficulty('hard')" class="btn btn-danger m-1 difficulty">Hard</button>
+    <button type="button" onclick="start()" class="btn btn-primary m-1 difficulty">Start</button>
   </div>
 
   <div id="stats" class="d-none">
@@ -27,6 +27,7 @@
   </div>
 
   <div class="mt-3">
+    <button id="powerUpButton" type="button" onclick="powerUp()" class="btn btn-info m-1">Power-Up</button>
     <button id="resetButton" onclick="resetGame()" class="btn btn-secondary d-none">Reset Game</button>
   </div>
 

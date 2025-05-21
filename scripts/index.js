@@ -1,7 +1,10 @@
 let matches = 0;
 let pairsLeft = 0;
+let powerUsed = false;
 let clicks = 0;
 let isProcessing = false;
+const diffButton = document.querySelectorAll('.difficulty');
+
 
 function updateStats() {
   document.getElementById("stat-matches").textContent = matches;
@@ -16,7 +19,12 @@ function resetGame() {
   firstCard = undefined;
   secondCard = undefined;
   isProcessing = false;
+  powerUsed = false;
+  document.getElementById("powerUpButton").classList.add("d-none");
 
+      document.querySelectorAll('.difficulty').forEach(function(el) {
+      el.classList.remove('d-none');
+    });
   document.getElementById('game_grid').innerHTML = '';
   document.getElementById('stats').classList.add('d-none');
   document.getElementById('resetButton').classList.add('d-none');
@@ -96,6 +104,7 @@ async function displayPokemon() {
     const cardTemplate = document.getElementById("card");
     const container = document.getElementById("game_grid");
 
+
   try {
     const pokemonArray = await loadPokemon();
     container.innerHTML = "";
@@ -110,14 +119,22 @@ async function displayPokemon() {
   } catch (error) {
     console.error("Error displaying Pokémon: ", error);
   }
+    document.querySelectorAll('.difficulty').forEach(function(el) {
+      el.classList.add('d-none');
+    });
   document.getElementById('stats').classList.remove('d-none');
   document.getElementById('resetButton').classList.remove('d-none');
+  document.getElementById('powerUpButton').classList.remove('d-none');
+
 }
 
 function setup() {
   matches = 0;
   firstCard = undefined;
   secondCard = undefined;
+
+  powerUsed = false;
+  document.getElementById("powerUpButton").classList.add("d-none");
 
   $(".card").on("click", function () {
     if (isProcessing || $(this).hasClass("flip")) return;
@@ -147,6 +164,7 @@ function setup() {
 
         if (matches === pairsLeft) {
           setTimeout(() => alert("You win!"), 500);
+          setTimeout(() => {resetGame();}, 2000);
         }
 
         resetCards();
@@ -160,6 +178,24 @@ function setup() {
       }
     }
   });
+}
+
+function powerUp() {
+  if (powerUsed || isProcessing) return;
+
+  powerUsed = true;
+  isProcessing = true;
+
+  const unmatchedCards = document.querySelectorAll(".card:not(.matched):not(.flip)");
+
+  unmatchedCards.forEach(card => card.classList.add("flip"));
+
+  setTimeout(() => {
+    unmatchedCards.forEach(card => card.classList.remove("flip"));
+    isProcessing = false;
+
+    document.getElementById("powerUpButton").classList.add("d-none");
+  }, 2000);
 }
 
 function start() {
